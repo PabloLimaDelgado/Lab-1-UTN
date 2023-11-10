@@ -39,6 +39,21 @@ public class Main {
         return matrixAux;
     }
 
+    //Metodo que copia en espejo la matriz
+    public static char[][] mirrorMatrix(char[][] adn) {
+        int rows = adn.length;
+        int cols = adn[0].length;
+        char[][] matrixAux = new char[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrixAux[i][j] = adn[i][cols - 1 - j];
+            }
+        }
+
+        return matrixAux;
+    }
+
     //Metodo que muestra la matriz
     public static void showMatrix(char adn[][]){
         System.out.println("El ADN es: ");
@@ -93,6 +108,14 @@ public class Main {
 
         return mainDiagonal + upMainDiagonalLong + upMainDiagonalShort + downMainDiagonalLong + downMainDiagonalShort;
     }
+
+    //Verifica la combinacion de las diagonales opuestas
+    public static int oppositeDiagonalsGeneVerification(char adn[][]){
+        char [][] adnAux = mirrorMatrix(adn);
+
+        return mainDiagonalsGeneVerification(adnAux);
+    }
+
     //Verifica la combinacion de una diagonal
     public static int diagonalGeneVerification(char adn[][], int row, int col){
         int rows = adn.length;
@@ -108,60 +131,26 @@ public class Main {
         }
         return 0;
     }
+
+    //Verifica si el ADN era mutante
+    public static boolean isMutant(char adn[][]){
+        int horizontalVerification = horizontalGeneVerification(adn);
+        int verticalVerification = verticalGeneVerification(adn);
+        int mainDiagonalVerification = mainDiagonalsGeneVerification(adn);
+        int oppositeDiagonalVerification = oppositeDiagonalsGeneVerification(adn);
+
+        if (horizontalVerification + verticalVerification + mainDiagonalVerification + oppositeDiagonalVerification >= 2){
+            return true;
+        } else{
+            return false;
+        }
+    }
     public static void main(String[] args) {
 
         char [][] adn = new char[6][6];
-        char [][] adnMutant = new char[6][6];
 
-        adnMutant[0][0] = 'T';
-        adnMutant[0][1] = 'G';
-        adnMutant[0][2] = 'A';
-        adnMutant[0][3] = 'C';
-        adnMutant[0][4] = 'G';
-        adnMutant[0][5] = 'T';
-
-        adnMutant[1][0] = 'A';
-        adnMutant[1][1] = 'G';
-        adnMutant[1][2] = 'A';
-        adnMutant[1][3] = 'A';
-        adnMutant[1][4] = 'G';
-        adnMutant[1][5] = 'C';
-
-        adnMutant[2][0] = 'A';
-        adnMutant[2][1] = 'G';
-        adnMutant[2][2] = 'A';
-        adnMutant[2][3] = 'A';
-        adnMutant[2][4] = 'C';
-        adnMutant[2][5] = 'C';
-
-        adnMutant[3][0] = 'G';
-        adnMutant[3][1] = 'G';
-        adnMutant[3][2] = 'T';
-        adnMutant[3][3] = 'A';
-        adnMutant[3][4] = 'C';
-        adnMutant[3][5] = 'A';
-
-        adnMutant[4][0] = 'T';
-        adnMutant[4][1] = 'G';
-        adnMutant[4][2] = 'T';
-        adnMutant[4][3] = 'G';
-        adnMutant[4][4] = 'T';
-        adnMutant[4][5] = 'T';
-
-        adnMutant[5][0] = 'A';
-        adnMutant[5][1] = 'G';
-        adnMutant[5][2] = 'A';
-        adnMutant[5][3] = 'C';
-        adnMutant[5][4] = 'C';
-        adnMutant[5][5] = 'A';
-
-        //fillMatrix(adn);
-        //showMatrix(adn);
-
-        showMatrix(adnMutant);
-        //System.out.print(horizontalGeneVerification(adnMutant));
-        //System.out.print(verticalGeneVerification(adnMutant));
-
-        System.out.print(mainDiagonalsGeneVerification(adnMutant));
+        fillMatrix(adn);
+        showMatrix(adn);
+        System.out.print(isMutant(adn));
     }
 }
