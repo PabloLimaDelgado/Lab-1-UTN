@@ -11,9 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String first_name, last_name, email, password, respuesta;
-        Date days = null;
-        int cp, number;
+        String  respuesta = "n";
 
         Database myDatabase = new Database("MyDB");
 
@@ -26,7 +24,12 @@ public class Main {
         String numeroRegex = "^261\\d{3,}$";
 
 
-        while (true){
+        while (respuesta.equals("n")){
+
+            String first_name, last_name, email, password;
+            Date days = null;
+            int cp, number;
+
             //NOMBRE
             do {
                 System.out.print("Ingrese el primer nombre: ");
@@ -123,7 +126,7 @@ public class Main {
             System.out.print("¿Desea agregar otro usuario? (S/N): ");
             respuesta = sc.nextLine().toLowerCase();
             sc.nextLine();
-            if (!respuesta.equals("s")) {
+            if (respuesta.equals("n")) {
                 break; // Si la respuesta no es "s", salir del bucle
             }
         }
